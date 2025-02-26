@@ -1,0 +1,116 @@
+<section>
+  <div class="row mt-3" *ngIf="category">
+    <div class="d-flex justify-content-center">
+      <h4>Search the post you wanted to read the review</h4>
+    </div>
+    <app-searchbar placeholder="Search post here"
+    [size]='posts.length > 0 ? "2.5rem":"3.5rem"'
+    (onChange)="getProducts($event)"></app-searchbar>
+  </div>
+
+  <!-- render the categories -->
+
+<div>
+  <div>
+    <div *ngIf="!category">
+      <span class="header font-poppins">Kindly select a category to begin.</span>
+    </div>
+    <div *ngIf="!category" style="cursor: pointer;"
+     class="category-container
+     py-2
+     category-navs"
+>
+      <div class="col-md-2 container" *ngFor="let item of categories; let i = index">
+        <div class="" (mouseenter)="showPopup($event,true,item.label)">
+          <div (click)="showPopup($event,true,item.label)" >
+            <span class="card-title h5" click="showPopup($event,true,item.label)" >{{ item.label }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- render products -->
+<div class="d-flex justify-content-between container py-0">
+<button class="btn btn-secondary m-3" *ngIf="category"  (click)="clearPosts()">Back</button>
+  <div class="btn-group m-3" role="group" aria-label="Basic example" *ngIf="category && posts.length > 0">
+    <button type="button" class="btn btn-secondary" (click)="selectOrder('latest')">Latest</button>
+    <button type="button" class="btn btn-secondary" (click)="selectOrder('oldest')">Oldest</button>
+  </div>
+ </div>
+
+ <div class="d-flex flex-column flex-wrap align-content-center gap-2" *ngIf="category && posts.length === 0">
+    <img class="mw-100 noproductimage" src="https://cdn-icons-png.flaticon.com/128/4989/4989793.png" alt="">
+    <h3>No Results Found</h3>
+ </div>
+
+
+
+    
+    <div class="container"  *ngIf="posts.length > 0" style="cursor: pointer;">
+        <div class="row">
+          <div class="col-md-3 mb-3" *ngFor="let item of posts;let i=index" (click)="onSelectProduct(item.postid)">
+            <div class="card h-100 shadow rounded p-2">
+              <img *ngIf="getBase64Image(item.images[0].data)" [src]=getBase64Image(item.images[0].data) class="card-img-top" style="height: 260px;">
+              <img *ngIf="!getBase64Image(item.images[0].data)" [src]="currentCategory[0].icon" alt="" srcset="">
+              <div class="card-body p-0">
+                <h5 class="card-title"><b>{{ item.postName }}</b></h5>
+                <h4 *ngIf="item.AddtionalName"><b>{{item.AdditionalName}}</b></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="label-popup" *ngIf="popShow">
+        <div class="d-flex flex-row flex-wrap justify-content-evenly align-content-start custom-flex">
+          <div *ngFor="let label of labelList;let i=index;" class="p-4">
+           <div>
+            <span class="h6 pointer" (click)="fetchBySelection(label.name)"><b>{{label.name}}</b></span>
+            <hr/>
+           </div>
+           <ul class="list-group list-group-flush" *ngFor="let sublabels of label.subTags;let j=index">
+            <span class="list-group-item pointer" (click)="fetchBySelection(sublabels)">{{sublabels}}</span>
+           </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between hero" *ngIf="!category">
+        <div  class="container flex-grow-1 d-flex flex-wrap
+        align-content-center
+        ">
+          <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla voluptates iusto temporibus nobis illo, reprehenderit quod sit sed et, ad eligendi? Molestias, doloribus sit eum officia enim error deserunt. Nemo voluptatum odit dolorum necessitatibus quo deleniti autem eos nam eaque, tempore laborum nostrum maxime repellendus ex quasi placeat. Magni autem quia iure impedit perspiciatis rerum optio vero adipisci fugit eaque voluptate nisi animi quae iusto ut praesentium, soluta, quos obcaecati id asperiores ipsa aspernatur! Debitis sit numquam ut, voluptate, reprehenderit libero tempore quidem enim natus accusamus placeat voluptatibus in similique asperiores adipisci atque vel, ipsam eveniet quasi velit quia sint.</span>
+        </div>
+        <div class="flex-grow-1">
+            <img class="home-image" src="/assets/logos/rb_2417.png" alt="" srcset="">
+        </div>
+      </div>
+
+      <div class="footer d-flex  py-4 justify-content-between">
+        <div class="d-flex flex-grow-1 justify-content-center">
+            <img class="logo-brand"
+            routerLink="/"
+            src="/assets/logos/sample.logo.png" alt="" srcset="">
+        </div>
+        <div class="d-flex flex-grow-1 justify-content-center text-center">
+          Crafted with ❤️ to enhance your experience – Thank you for choosing [Your App Name]!
+        </div>
+        <div class=" d-flex justify-content-center gap-4 flex-grow-1">
+            <div>
+              <img class="footer-icons" src="/assets/icons/facebook.png" alt="" srcset="">
+            </div>
+            <div>
+              <img class="footer-icons" src="/assets/icons/whatsapp.png" alt="" srcset="">
+            </div>
+            <div>
+              <img class="footer-icons" src="/assets/icons/instagram.png" alt="" srcset="">
+            </div>
+        </div>
+      </div>
+
+</section>
+
+
