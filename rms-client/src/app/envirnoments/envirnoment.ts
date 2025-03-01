@@ -1,3 +1,3 @@
 export const envirnomentConfig={
-    baseUrl:"http://localhost:9883/api/"
+    baseUrl:"http://147.93.20.102:9883/api/"
 }
