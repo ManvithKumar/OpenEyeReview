@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import Swal from 'sweetalert2'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {v4 as uuidv4} from 'uuid';
+import { LoaderService } from 'src/app/services/loader.services';
 
 
 
@@ -67,6 +69,7 @@ export class ProductDetalsComponent {
 
   constructor(private router:ActivatedRoute,private postService:PostServices,private reviewService:ReviewService,
     private authServices:AuthServices,private sharedServices:SharedServices,private routerServices:Router,
+    private loaderService: LoaderService,
     private modalServices:NgbModal){}
 
   ngOnInit()
@@ -77,7 +80,6 @@ export class ProductDetalsComponent {
     this.isLoggedIn = this.authServices.isLoggedIn()
     this.userid = this.authServices.getLoggeduserId()
     this.isAdmin = this.authServices.IsUserAdmin()
-    console.log(this.Images)
   }
 
   back()
@@ -87,14 +89,16 @@ export class ProductDetalsComponent {
 
   getReviews()
   {
+    this.loaderService.show()
     this.reviewService.getReviewsByProductId(this.id).subscribe((data)=>{
       this.reviews = data
-      console.log(data)
+      this.loaderService.hide();
     })
   }
 
   getPostById()
   {
+    this.loaderService.show()
     this.postService.getPostById(this.id).subscribe((data)=>{
       this.currentProduct = data
       if( this.currentProduct.images.length === 1 && this.currentProduct.images[0]?.data?.length === 0)
@@ -106,6 +110,7 @@ export class ProductDetalsComponent {
           this.Images.push(this.getBase64Image(image.data))
         })
       }
+      this.loaderService.hide();
     })
     
   }
@@ -139,7 +144,7 @@ export class ProductDetalsComponent {
             return false
           }
           const reviewForm = {} as any
-          reviewForm["reviewid"]=crypto.randomUUID()
+          reviewForm["reviewid"]=uuidv4()
           reviewForm["userid"] = this.userid
           reviewForm["postid"] = this.currentProduct.postid
           reviewForm["ratings"] = this.ratings

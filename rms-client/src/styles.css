@@ -373,3 +373,55 @@ li {
 .footer-icons li{
     text-decoration: none;
 }
+
+    /* Loader Container */
+    .loader-overlay {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+        z-index: 9999;
+      }
+  
+      /* Loader Animation */
+      .loader {
+        width: 80px;
+        aspect-ratio: 2;
+        --_g: no-repeat radial-gradient(circle closest-side,#000 90%,#0000);
+        background: 
+          var(--_g) 0%   50%,
+          var(--_g) 50%  50%,
+          var(--_g) 100% 50%;
+        background-size: calc(100%/3) 50%;
+        animation: l3 1s infinite linear;
+      }
+  
+      @keyframes l3 {
+          20%{background-position:0%   0%, 50%  50%,100%  50%}
+          40%{background-position:0% 100%, 50%   0%,100%  50%}
+          60%{background-position:0%  50%, 50% 100%,100%   0%}
+          80%{background-position:0%  50%, 50%  50%,100% 100%}
+      }
+  
+      /* Responsive Design */
+      @media (max-width: 600px) {
+        .loader {
+          width: 50px;
+        }
+      }
+
+      .logo-container {
+        display: flex; /* Make elements inline */
+        align-items: center; /* Align vertically */
+        gap: 10px; /* Add space between logo and text */
+        cursor: pointer; /* Add pointer effect */
+        text-decoration: none; /* Remove any link styling */
+    }
+    
+    .logo-brand {
+        width: 40px; /* Adjust logo size */
+        height: auto;
+    }

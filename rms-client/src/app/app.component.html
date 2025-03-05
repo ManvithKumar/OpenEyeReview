@@ -1,8 +1,9 @@
 <div class="main">
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
-            <div  routerLink="/">
-                <img class="logo-brand pointer" src="/assets/logos/sample.logo.png" alt="" srcset="">
+            <div routerLink="/" class="logo-container">
+                <img class="logo-brand pointer" src="/assets/logos/sample.logo.png" alt="Logo">
+                <span class="brand-name"><b><i>OpenEyeReview</i></b></span>
             </div>
             <button
                 class="navbar-toggler"
@@ -69,6 +70,8 @@
             </div>
         </div>
     </nav>
-    
+    <div *ngIf="isLoading$ | async" class="loader-overlay">
+        <div class="loader"></div>
+      </div>
 <router-outlet></router-outlet>
 </div>

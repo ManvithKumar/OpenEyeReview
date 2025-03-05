@@ -9,6 +9,7 @@ import { SharedServices } from 'src/app/services/shared-services';
 import { FeedbackServices } from 'src/app/services/feedback.services';
 import { faUser,faEnvelopeOpen,faLayerGroup,faFlag,faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Router } from '@angular/router';
+import {v4 as uuidv4} from 'uuid';
 
 
 @Component({
@@ -190,7 +191,7 @@ createOrUpdateCategory() {
   }
   else{ 
     let formObj ={
-      cid:crypto.randomUUID(),
+      cid:uuidv4(),
       label:this.categoryForm.value.categoryName,
       icon:this.categoryForm.value.iconLink,
       sublabel:JSON.stringify(this.categoryForm.value.tags),

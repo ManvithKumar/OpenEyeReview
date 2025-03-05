@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { FormArray } from "@angular/forms";
 import { Location } from "@angular/common";
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable({
     providedIn:"root"
@@ -43,7 +44,7 @@ export class SharedServices{
           uint8Array[i] = byteString.charCodeAt(i);
         }
       
-        const fileName = `${crypto.randomUUID()}.${mimeType.split('/')[1]}`; 
+        const fileName = `${uuidv4()}.${mimeType.split('/')[1]}`; 
       
         return new File([uint8Array], fileName, { type: mimeType });
       }

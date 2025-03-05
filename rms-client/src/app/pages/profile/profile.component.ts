@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import { UserServices } from 'src/app/services/user-services';
 import { faEye,faPenToSquare,faTrash,faUserPen,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { SharedServices } from 'src/app/services/shared-services';
+import { LoaderService } from 'src/app/services/loader.services';
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +41,7 @@ avators  = ['red','yellow','green','blue','pink','white','pinkishred','black','s
 
 
 constructor(private authServices:AuthServices,private postServices:PostServices,
+  private loaderService: LoaderService,
   private router:Router,private modalService:NgbModal,private userService:UserServices,
   private sharedServices:SharedServices){}
 
@@ -61,8 +63,10 @@ back()
 
 getAllUserPosts()
 {
+  this.loaderService.show()
   this.postServices.findPostByUserId(this.currentUser.userid).subscribe((data)=>{
     this.posts = data
+    this.loaderService.hide()
   })
 }
 
@@ -73,10 +77,12 @@ updateUserInfo()
   const formObj = { username:this.username,profileIcon:profileIcon}
 
   this.userService.updateUserInfo(formObj).subscribe((data)=>{
+    this.loaderService.show()
     this.authServices.setloggedUser(data)
     setTimeout(()=>{
       location.reload()
     },500)
+    this.loaderService.hide();
   })
 
 }

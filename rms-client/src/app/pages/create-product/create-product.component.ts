@@ -12,6 +12,7 @@ import { CategoryServices } from 'src/app/services/category.services';
 import { faArrowLeft,faTrash,faImage } from '@fortawesome/free-solid-svg-icons'
 import { ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {v4 as uuidv4} from 'uuid';
 
 @Component({
   selector: 'app-create-product',
@@ -148,7 +149,7 @@ export class CreateProductComponent {
     });
     const base64Images = await Promise.all(imageBlobs.map(file => this.fileToBase64(file)));  
     const formObj = this.form.value as any;
-    formObj["id"] = crypto.randomUUID();
+    formObj["id"] = uuidv4();
     formObj["userid"] = this.userid;
     formObj["images"] = base64Images;
     formObj["tags"] = this.convertArrayToString(this.form.get("tags") as FormArray);

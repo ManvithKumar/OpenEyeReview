@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthServices } from './services/auth.services';
 import { category } from 'src/data/category';
+import { LoaderService } from './services/loader.services'
+
 
 @Component({
   selector: 'app-root',
@@ -9,13 +11,14 @@ import { category } from 'src/data/category';
 })
 export class AppComponent {
 
-  constructor(private authServices:AuthServices){}
+  constructor(private authServices:AuthServices,private loaderService: LoaderService){}
 
   title = 'rms-client';
   collapsed = true;
   isAdmin:boolean=false
   isLoggedIn:boolean =false
   username:string=""
+  isLoading$ = this.loaderService.isLoading$;
 
   categories:any[]=[]
 

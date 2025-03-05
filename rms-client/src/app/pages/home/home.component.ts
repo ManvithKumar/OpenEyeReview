@@ -4,6 +4,7 @@ import {Router} from '@angular/router'
 import { PostServices } from 'src/app/services/posts.services';
 import { CategoryServices } from 'src/app/services/category.services';
 import { SharedServices } from 'src/app/services/shared-services';
+import { LoaderService } from 'src/app/services/loader.services';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class HomeComponent {
   constructor(private router:Router,
   private postService:PostServices,
   private sharedServices:SharedServices,
+  private loaderService: LoaderService,
   private categoryService:CategoryServices){}
 
   posts:any[]=[]
@@ -53,8 +55,10 @@ export class HomeComponent {
   }
 
   getAllCategories(){
+    this.loaderService.show()
     this.categoryService.getAllCategory().subscribe((data)=>{
       this.categories = data
+      this.loaderService.hide();
     })
   }
 
@@ -81,8 +85,10 @@ export class HomeComponent {
     this.searchKey = key.searchKey
     if(key.isValid)
     {
+      this.loaderService.show()
       this.postService.findPostByCategory({category:category,key:key.searchKey}).subscribe((data)=>{
         this.posts = data
+        this.loaderService.hide();
       })
     }
   }
